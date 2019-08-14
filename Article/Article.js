@@ -85,7 +85,14 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
-  }
+  },
+  {
+  title: 'Juanita Wrote This Article',
+  date: 'Aug. 13th, 2019',
+  firstParagraph: 'Hello.',
+  secondParagraph: 'This is the second paragraph.',
+  thirdParagraph: 'This is the third paragraph.'
+  } 
 ];
 
 /* Step 1: Create a function that creates a component. You will want your component to look like the template below: 
@@ -93,22 +100,57 @@ const data = [
   <div class="article">
     <h2>{title of the article}</h2>
     <p class="date">{date of the article}</p>
-
     {three separate paragraph elements}
-
     <span class='expandButton'></span>
   </div>
-
   Hint: You will need to use createElement more than once here!
-
-  Your function should take either an object as it's one argument, or 5 separate arguments mapping to each peice of the data object above.
-
+  Your function should take either an object as it's one argument, or 5 separate arguments mapping to each piece of the data object above.
   Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
-
   Step 3: return the entire component.
-
   Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
-
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new artible
-
 */
+
+let articles = document.querySelector('.articles');
+
+// ForEach method to create a new article and append it to the parentNode
+data.forEach(item => {
+  articles.appendChild(createArticle(item.title, item.date, item.firstParagraph, item.secondParagraph, item.thirdParagraph));
+})
+
+function createArticle(title, date, firstP, secondP, thirdP) {
+  // Creating Variables
+  const article = document.createElement('div');
+  const header = document.createElement('h2');
+  const paragraphDate = document.createElement('p');
+  const firstParagraph = document.createElement('p');
+  const secondParagraph = document.createElement('p');
+  const thirdParagraph = document.createElement('p');
+  const span = document.createElement('span');
+
+  // Adding ClassList's
+  article.classList.add('article');
+  paragraphDate.classList.add('date');
+  span.classList.add('expandButton');
+
+  // Appending the elements
+  article.appendChild(header);
+  article.appendChild(paragraphDate);
+  article.appendChild(firstParagraph);
+  article.appendChild(secondParagraph);
+  article.appendChild(thirdParagraph);
+  article.appendChild(span);
+  
+  // TextContent for the elements
+  header.textContent = title;
+  paragraphDate.textContent = date;
+  firstParagraph.textContent = firstP;
+  secondParagraph.textContent = secondP;
+  thirdParagraph.textContent = thirdP;
+  span.textContent = 'Read More';
+
+  // EventListener to toggle the class article-open.
+  span.addEventListener('click', () => article.classList.toggle('article-open'));
+
+  return article;
+}
